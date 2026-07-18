@@ -1,0 +1,32 @@
+# Process Rules
+
+## Rules Files
+
+- Jangan membuat, menghapus, atau mengubah file rules (`AGENTS.md`, `rules.md`, `rules/**/*.mdx`) kecuali user meminta eksplisit.
+- Jika user meminta penambahan rules, buat perubahan sekecil mungkin dan hindari duplikasi besar antar file rules.
+- `AGENTS.md` harus tetap menjadi ringkasan inti. Detail panjang ditempatkan di `rules/*.mdx`.
+
+## Dev Server
+
+- Jangan running aplikasi/dev server kecuali user meminta atau memberi izin eksplisit.
+- Jika user memberi izin untuk start/stop dev server, pastikan proses yang agent jalankan dihentikan sebelum final answer kecuali user meminta server tetap hidup.
+- Untuk verifikasi default, fokus ke unit test, type-check, lint, dan smoke test CLI.
+
+## Validation
+
+- Jika ada perubahan code, buat atau ubah unit test untuk flow utama yang terdampak.
+- Setelah perubahan code, jalankan `npm run type-check` dan `npm run lint`.
+- Untuk menjalankan semua unit test, gunakan `npm run test:run`.
+- Jika test penuh gagal karena masalah environment/transient, retry sekali dan laporkan hasil kedua beserta konteks kegagalan pertama.
+- Pastikan tidak ada error message/diagnostic pada file yang diubah.
+
+## Package Install
+
+- Kalau install package, jangan edit `package.json` manual.
+- Selalu gunakan `npm install <package>` atau `npm install -D <package>` agar versi compatible terbaru terpasang otomatis.
+
+## Logging
+
+- Hindari `console.log` karena cepat memenuhi log Docker.
+- Boleh gunakan `console.error` untuk error handling.
+- Jika debug sementara benar-benar perlu, gunakan seminimal mungkin dan hapus sebelum selesai.

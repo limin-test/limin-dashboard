@@ -1,0 +1,23 @@
+# Ecosystem Rules
+
+Rules di file ini termasuk prioritas utama project. Context7 dan Vuetify MCP harus dipakai di awal saat pekerjaan menyentuh library, dependency, tooling, API, atau Vuetify.
+
+## Dokumentasi Resmi
+
+- Selalu gunakan Context7 sebelum membuat kode, langkah setup/konfigurasi, atau keputusan teknis yang bergantung pada dokumentasi library/API.
+- Untuk Context7, wajib resolve Library ID dulu, lalu ambil docs dari Context7.
+- Selalu gunakan Vuetify MCP sebelum membuat kode, setup/konfigurasi, atau keputusan teknis yang bergantung pada dokumentasi Vuetify.
+- Utamakan dokumentasi resmi terbaru untuk dependency, build tool, router, framework, dan plugin.
+
+## Dependency dan Tooling
+
+- Jangan mengikuti project referensi secara literal jika dependency, router, build config, atau package di referensi sudah deprecated, bukan jalur official terbaru, atau tidak cocok dengan stack project ini.
+- Perubahan major dependency, build config, router, atau tooling wajib dikonfirmasi dulu sebelum downgrade/upgrade besar.
+- Jika ada pilihan antara mengikuti referensi lama dan mengikuti official terbaru, jelaskan tradeoff singkat lalu gunakan jalur official terbaru kecuali user meminta sebaliknya.
+- Jangan downgrade package hanya demi menyamai project referensi tanpa konfirmasi eksplisit.
+- Jangan mengganti sistem route/build/tooling besar hanya berdasarkan asumsi. Cek docs resmi dan status package lebih dulu.
+
+## Project Referensi
+
+- Project referensi dipakai untuk visual language, layout, navigasi, density, dan pola UX.
+- Project referensi tidak otomatis menjadi sumber kebenaran untuk versi dependency, package deprecated, router, atau konfigurasi build.

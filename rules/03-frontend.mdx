@@ -1,0 +1,37 @@
+# Frontend Rules
+
+## Visual Language
+
+- Tampilan harus responsif dan enak dilihat.
+- Jika user memberikan project referensi, ikuti pola layout, navigasi, density, theme, dan visual language project referensi tersebut kecuali user meminta berbeda atau stack referensinya tidak sesuai rules ecosystem.
+- Untuk halaman admin/dashboard internal, utamakan tampilan aplikasi admin yang familiar dan rapi.
+- Hindari gaya landing page/marketing page pada halaman authenticated kecuali diminta eksplisit.
+- Hindari rounded yang berlebihan.
+- Jangan set default global seperti `VBtn rounded="pill"` atau `VCard rounded="xl"` kecuali memang sudah menjadi bagian design system/project referensi.
+- Gunakan warna primary/default Vuetify atau warna dari design system yang sudah ada.
+- Jangan membuat palet warna baru sendiri tanpa permintaan eksplisit.
+
+## Form dan Input
+
+- Textfield gunakan `density="compact"`.
+- Textfield readonly biasakan background warna abu-abu.
+- Untuk setiap input, wajib tambahkan attribute `name` yang stabil untuk autocomplete dan testing.
+- Pastikan unit test mencakup interaksi user mengisi atau mengubah field sebelum submit.
+
+## Table dan Mobile
+
+- Untuk table Vuetify (`v-data-table` / `v-data-table-server`), wajib perhatikan tampilan mobile.
+- Jika memakai `v-table`, wajib buat alternatif tampilan mobile (`smAndDown`) yang setara dan rapi.
+- Hindari tombol "Action" lebar di mobile.
+- Gunakan `v-menu` activator icon seperti `mdi-dots-vertical` dengan `:loading` dan `:disabled` memakai state loading yang relevan.
+- Gunakan fitur bawaan `v-data-table-server` untuk sorting dan items-per-page jika tersedia, agar UI tidak boros tempat.
+
+## Dialog dan Aksi
+
+- Aksi krusial seperti delete data atau logout wajib memakai dialog konfirmasi.
+- Gunakan komponen dialog konfirmasi reusable seperti `ConfirmDialog` agar konsisten.
+
+## Wording dan Console
+
+- Hindari teks teknis/dev-facing di UI user seperti Docker, cookie auth, interceptor, `withCredentials`, `Accept-Language`, dan istilah backend lain kecuali memang dibutuhkan oleh fitur.
+- Pastikan tidak ada error atau warning di console browser akibat perubahan.
