@@ -19,6 +19,8 @@ File ini adalah ringkasan aturan inti. Detail aturan ada di `rules/*.mdx`.
 - `src/schemas/` adalah tempat schema validasi dan konfigurasi form. Boleh diubah jika task memang menyentuh validasi/form schema; jangan diubah untuk perubahan yang tidak terkait.
 - Jangan buat interface/type di component. Simpan type domain dan payload API di `src/model`.
 - Hindari `any`, file besar campur tanggung jawab, store Pinia pass-through, dan logic API yang tidak perlu dibuat global.
+- State reaktif, computed, watcher, handler, transform route, filtering, dan flow form pada page/component wajib berada di `src/composable/use-*.ts`; `script setup` hanya untuk props/emits, import child component/type, serta wiring composable.
+- Shell persisten seperti sidebar dan navigasi global adalah milik `src/layouts/` (atau child foldernya); topbar hanya berada di layout jika dipakai semua route, selain itu menjadi milik halaman/fiturnya. Layout membungkus `<router-view>`.
 - Jika ada call API, gunakan Promise chain (`.then/.catch/.finally`), jangan `async/await`. Isi `catch` cukup `console.error` karena error handling utama ada di config API.
 - Import `vue` dan `vue-router` tidak perlu karena sudah auto import.
 - Untuk UI admin/dashboard, ikuti pola Vuetify yang rapi, familiar, responsif, dan tidak bergaya landing page kecuali diminta.

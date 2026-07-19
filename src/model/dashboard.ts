@@ -11,25 +11,27 @@ export interface QuoteApproval {
   description: string
   id: string
   initials: string
+  position: number
   statusLabel: string
-  statusTone: string
+  statusTone: QuoteApprovalStatusTone
   title: string
+  version: number
 }
+
+export type QuoteApprovalStatusTone = 'error' | 'primary' | 'secondary' | 'success' | 'warning'
 
 export interface QuoteApprovalDraft {
   description: string
   title: string
 }
 
+export interface QuoteApprovalDetail {
+  dockName: string
+  quote: QuoteApproval
+}
+
 export interface QuoteApprovalColumn {
   dockName: string
   id: string
   quotes: QuoteApproval[]
-}
-
-export interface QuoteMove {
-  destinationColumnId: string
-  destinationIndex: number
-  quoteId: string
-  sourceColumnId: string
 }

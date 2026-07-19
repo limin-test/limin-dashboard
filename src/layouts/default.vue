@@ -1,10 +1,5 @@
 <template>
   <v-app class="dashboard-app">
-    <DashboardTopbar
-      :mobile="mobile"
-      @toggle-navigation="drawerOpen = !drawerOpen"
-    />
-
     <DashboardSidebar
       v-model="drawerOpen"
       :mobile="mobile"
@@ -17,16 +12,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { useDisplay } from 'vuetify'
-  import DashboardSidebar from '@/components/dashboard/DashboardSidebar.vue'
-  import DashboardTopbar from '@/components/dashboard/DashboardTopbar.vue'
+  import { useDefaultLayout } from '@/composable/use-default-layout'
+  import DashboardSidebar from './components/DashboardSidebar.vue'
 
-  const { mobile } = useDisplay({ mobileBreakpoint: 'md' })
-  const drawerOpen = ref(true)
-
-  watch(mobile, isMobile => {
-    drawerOpen.value = !isMobile
-  }, { immediate: true })
+  const { drawerOpen, mobile } = useDefaultLayout()
 </script>
 
 <style scoped>

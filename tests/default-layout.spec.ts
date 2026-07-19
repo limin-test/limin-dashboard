@@ -29,11 +29,11 @@ async function mountDefaultLayout () {
 }
 
 describe('DefaultLayout', () => {
-  it('renders the application shell around the routed dashboard page', async () => {
+  it('renders the persistent sidebar around the routed page without a global topbar', async () => {
     const wrapper = await mountDefaultLayout()
 
-    expect(wrapper.text()).toContain('Dry Dock')
     expect(wrapper.text()).toContain('Dashboard')
     expect(wrapper.text()).toContain('Dashboard content')
+    expect(wrapper.find('.dashboard-topbar').exists()).toBe(false)
   })
 })

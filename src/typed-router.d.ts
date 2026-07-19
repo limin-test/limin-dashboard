@@ -38,6 +38,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/quotes/[quoteId]': RouteRecordInfo<
+      '/quotes/[quoteId]',
+      '/quotes/:quoteId',
+      { quoteId: ParamValue<true> },
+      { quoteId: ParamValue<false> },
+      | never
+    >,
   }
 
   /**
@@ -58,6 +65,14 @@ declare module 'vue-router/auto-routes' {
         | never
       pathParamNames:
         | never
+    }
+    'src/pages/quotes/[quoteId].vue': {
+      routes:
+        | '/quotes/[quoteId]'
+      views:
+        | never
+      pathParamNames:
+        | 'quoteId'
     }
   }
 

@@ -21,7 +21,15 @@
       </div>
 
       <div
-        v-if="matchingQuoteCount > 0"
+        v-if="isBoardLoading"
+        class="quote-approval-board__loading"
+        role="status"
+      >
+        Loading quotes...
+      </div>
+
+      <div
+        v-else-if="matchingQuoteCount > 0"
         class="quote-approval-board__scroll-area"
       >
         <div class="quote-approval-board__columns">
@@ -31,6 +39,7 @@
             :column="column"
             :search-query="searchQuery"
             @create-quote="createQuote"
+            @move-quote="persistQuotePlacement"
             @update-quotes="replaceQuotes"
           />
         </div>
@@ -48,16 +57,18 @@
 </template>
 
 <script setup lang="ts">
-  import { useDashboard } from '@/composable/use-dashboard'
+  import { useQuoteApprovalBoard } from '@/composable/use-quote-approval-board'
   import QuoteApprovalColumn from './QuoteApprovalColumn.vue'
 
   const {
     approvalColumns,
     createQuote,
+    isBoardLoading,
     matchingQuoteCount,
+    persistQuotePlacement,
     replaceQuotes,
     searchQuery,
-  } = useDashboard()
+  } = useQuoteApprovalBoard()
 </script>
 
 <style scoped>
@@ -111,6 +122,12 @@
 
   .quote-approval-board__columns > * {
     width: min(330px, calc(100vw - 64px));
+  }
+
+  .quote-approval-board__loading {
+    color: #66758a;
+    margin: 56px auto;
+    text-align: center;
   }
 
   .quote-approval-board__empty-state {

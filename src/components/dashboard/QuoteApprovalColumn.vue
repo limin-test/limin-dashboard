@@ -9,7 +9,7 @@
         icon="mdi-plus"
         size="small"
         variant="text"
-        @click="isCreateFormOpen = true"
+        @click="openCreateForm"
       />
     </header>
 
@@ -19,8 +19,10 @@
       :animation="180"
       chosen-class="quote-approval-column__chosen"
       class="quote-approval-column__cards quote-approval-column__draggable-list"
+      :data-column-id="column.id"
       ghost-class="quote-approval-column__ghost"
       group="quote-approvals"
+      @end="handleDragEnd"
     >
       <div
         v-for="quote in draggableQuotes"
@@ -46,7 +48,7 @@
     <QuoteApprovalCreateForm
       v-if="isCreateFormOpen"
       :column-id="column.id"
-      @cancel="isCreateFormOpen = false"
+      @cancel="closeCreateForm"
       @submit="createQuote"
     />
 
@@ -70,6 +72,7 @@
 <script setup lang="ts">
   import type { QuoteApproval, QuoteApprovalColumn, QuoteApprovalDraft } from '@/model/dashboard'
   import { VueDraggable } from 'vue-draggable-plus'
+  import { useQuoteApprovalColumn } from '@/composable/use-quote-approval-column'
   import QuoteApprovalCard from './QuoteApprovalCard.vue'
   import QuoteApprovalCreateForm from './QuoteApprovalCreateForm.vue'
 
@@ -80,32 +83,26 @@
 
   const emit = defineEmits<{
     'create-quote': [columnId: string, draft: QuoteApprovalDraft]
+    'move-quote': [quoteId: string, destinationColumnId: string, beforeQuoteId: string | null]
     'update-quotes': [columnId: string, quotes: QuoteApproval[]]
   }>()
 
-  const isCreateFormOpen = ref(false)
-  const normalizedSearchQuery = computed(() => props.searchQuery.trim().toLocaleLowerCase())
-  const isSearchActive = computed(() => normalizedSearchQuery.value.length > 0)
-  const draggableQuotes = computed({
-    get: () => props.column.quotes,
-    set: quotes => {
-      emit('update-quotes', props.column.id, quotes)
-    },
-  })
-  const visibleQuotes = computed(() => props.column.quotes.filter(quote => {
-    if (!normalizedSearchQuery.value) {
-      return true
-    }
-
-    return [quote.code, quote.customerName, quote.title].some(value => (
-      value.toLocaleLowerCase().includes(normalizedSearchQuery.value)
-    ))
-  }))
-
-  function createQuote (draft: QuoteApprovalDraft) {
-    emit('create-quote', props.column.id, draft)
-    isCreateFormOpen.value = false
-  }
+  const {
+    closeCreateForm,
+    createQuote,
+    draggableQuotes,
+    handleDragEnd,
+    isCreateFormOpen,
+    isSearchActive,
+    openCreateForm,
+    visibleQuotes,
+  } = useQuoteApprovalColumn(
+    () => props.column,
+    () => props.searchQuery,
+    (columnId, draft) => emit('create-quote', columnId, draft),
+    (quoteId, destinationColumnId, beforeQuoteId) => emit('move-quote', quoteId, destinationColumnId, beforeQuoteId),
+    (columnId, quotes) => emit('update-quotes', columnId, quotes),
+  )
 </script>
 
 <style scoped>

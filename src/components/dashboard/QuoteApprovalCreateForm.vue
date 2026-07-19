@@ -54,13 +54,12 @@
 
 <script setup lang="ts">
   import type { QuoteApprovalDraft } from '@/model/dashboard'
+  import { useQuoteApprovalCreateForm } from '@/composable/use-quote-approval-create-form'
   import {
-    createQuoteApprovalDraft,
-    isQuoteApprovalDraftValid,
     quoteApprovalDraftRules,
   } from '@/schemas/quote-approval'
 
-  const props = defineProps<{
+  const { columnId } = defineProps<{
     columnId: string
   }>()
 
@@ -69,31 +68,10 @@
     submit: [draft: QuoteApprovalDraft]
   }>()
 
-  const draft = ref<QuoteApprovalDraft>(createQuoteApprovalDraft())
-  const isFormValid = ref<boolean | null>(null)
-  const columnId = computed(() => props.columnId)
-
-  function cancel () {
-    resetForm()
-    emit('cancel')
-  }
-
-  function resetForm () {
-    draft.value = createQuoteApprovalDraft()
-    isFormValid.value = null
-  }
-
-  function submitQuote () {
-    if (!isQuoteApprovalDraftValid(draft.value)) {
-      return
-    }
-
-    emit('submit', {
-      description: draft.value.description.trim(),
-      title: draft.value.title.trim(),
-    })
-    resetForm()
-  }
+  const { cancel, draft, isFormValid, submitQuote } = useQuoteApprovalCreateForm(
+    () => emit('cancel'),
+    draft => emit('submit', draft),
+  )
 </script>
 
 <style scoped>

@@ -25,6 +25,14 @@
 - Jika ada script yang sering duplicate, utamakan buat helper.
 - Jika refactor atau fitur baru membuat sebuah file mulai membesar dan tidak fokus, pindahkan bagian dengan tanggung jawab jelas ke file baru yang spesifik.
 
+## Composable
+
+- `src/composable/use-*.ts` wajib menjadi pemilik state reaktif, computed, watcher, handler event, filtering, transform parameter route, dan flow form untuk page atau component.
+- `script setup` pada `src/pages` dan `src/components` hanya boleh menangani boundary: `defineProps`, `defineEmits`, import child component/type, dan wiring nilai/handler dari composable ke template atau emit.
+- Jangan menyimpan fungsi submit, cancel, reset, open/close, transform data, atau computed state langsung di page/component bila logic tersebut dapat dipindahkan ke composable yang fokus.
+- Konstanta presentasional murni yang tidak membutuhkan state dapat berada di `src/constants`; composable tidak dibuat hanya untuk memindahkan teks statis.
+- Shell yang persisten lintas route seperti sidebar dan navigasi utama harus berada di `src/layouts` atau child foldernya. Topbar hanya ditempatkan di layout bila seluruh route berbagi topbar yang sama; topbar khusus halaman adalah milik halaman/fiturnya. `layout` bertanggung jawab menyusun shell di sekitar `<router-view>`; state dan handler shell ditempatkan pada composable layout.
+
 ## Type dan Schema
 
 - Jangan buat interface/type di dalam component.

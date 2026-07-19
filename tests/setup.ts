@@ -1,5 +1,7 @@
 import { afterEach, beforeAll, vi } from 'vitest'
 
+vi.stubEnv('VITE_API_BASE_URL', 'https://api.test/v1/')
+
 class ResizeObserverMock {
   disconnect () {}
 

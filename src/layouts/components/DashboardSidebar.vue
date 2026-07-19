@@ -21,7 +21,7 @@
         :prepend-icon="item.icon"
         rounded="lg"
         :title="item.label"
-        @click="activeItem = item.value"
+        @click="selectNavigationItem(item.value)"
       />
     </v-list>
 
@@ -36,6 +36,7 @@
 </template>
 
 <script setup lang="ts">
+  import { useDashboardSidebar } from '@/composable/use-dashboard-sidebar'
   import { dashboardNavigationItems } from '@/constants/dashboard-navigation'
 
   defineProps({
@@ -51,7 +52,7 @@
 
   defineEmits(['update:model-value'])
 
-  const activeItem = ref('dashboard')
+  const { activeItem, selectNavigationItem } = useDashboardSidebar()
 </script>
 
 <style scoped>
