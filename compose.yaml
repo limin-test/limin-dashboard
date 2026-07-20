@@ -1,0 +1,14 @@
+name: limin-dashboard
+
+services:
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # This value is compiled into the static Vite bundle. Rebuild to change it.
+        VITE_API_BASE_URL: "${VITE_API_BASE_URL:-http://localhost:9000/api/v1}"
+    image: limin-dashboard:local
+    ports:
+      - "${DASHBOARD_PORT:-3000}:8080"
+    restart: unless-stopped
